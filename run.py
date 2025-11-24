@@ -30,10 +30,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 default_port = 7272
 
 parser = argparse.ArgumentParser(description="Configure app environment.")
-parser.add_argument('--port', type=int, help=f'Deploy on a specific port; default is {default_port}')
+parser.add_argument('--port', type=int, default=default_port, help=f'Deploy on a specific port; default is {default_port}')
 args = parser.parse_args()
 
-port =  args.get('port', default_port)
+port =  args.port
 
 try:
     from app import app
