@@ -20,27 +20,32 @@ Requirements:
 
 Usage:
     python run.py
-
-Then open http://localhost:5000 in your web browser.
 """
-
+import argparse
 import sys
 import os
 
 # Add the current directory to Python path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+default_port = 7272
+
+parser = argparse.ArgumentParser(description="Configure app environment.")
+parser.add_argument('--port', type=int, help=f'Deploy on a specific port; default is {default_port}')
+args = parser.parse_args()
+
+port =  args.get('port', default_port)
 
 try:
     from app import app
 
     if __name__ == '__main__':
         print("🚀 Starting Day Trading Game...")
-        print("📊 Open your browser and go to: http://localhost:5000")
+        print(f"📊 Open your browser and go to: http://localhost:{port}")
         print("🎮 Keyboard shortcuts: B=Buy, S=Sell, H=Hold, R=Reset")
         print("🌙 Don't forget to try the dark mode!")
         print("\nPress Ctrl+C to stop the server.")
 
-        app.run(debug=True, host='0.0.0.0', port=7272)
+        app.run(debug=True, host='0.0.0.0', port=port)
 
 except ImportError as e:
     print(f"❌ Error importing required modules: {e}")
